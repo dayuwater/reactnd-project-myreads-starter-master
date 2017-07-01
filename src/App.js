@@ -18,37 +18,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <div>
-            {console.log("Inside index")}
-            <p>Index</p>
-          </div>
-        )}>
-        </Route>
-
-        <Route path="/search" render={() => (
-          <div>
-            Search
-          </div>
-        )}>
-        </Route>
-
-
-
-
-        {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                <input type="text" placeholder="Search by title or author" />
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
-        ) : (
-            <div className="list-books">
+          <div className="list-books">
               <div className="list-books-title">
                 <h1>MyReads</h1>
               </div>
@@ -207,7 +177,25 @@ class BooksApp extends React.Component {
                 <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
               </div>
             </div>
-          )}
+        )}>
+        </Route>
+
+        <Route path="/search" render={() => (
+
+          <div className="search-books">
+            <div className="search-books-bar">
+              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+              <div className="search-books-input-wrapper">
+                <input type="text" placeholder="Search by title or author" />
+              </div>
+            </div>
+            <div className="search-books-results">
+              <ol className="books-grid"></ol>
+            </div>
+          </div>
+
+        )}>
+        </Route>
       </div>
     )
   }
