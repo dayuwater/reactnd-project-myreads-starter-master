@@ -99,6 +99,19 @@ body, .app {
   font-size: 0;
 }
 
+.clear-search {
+  display: block;
+  width: 73px;
+  background: white;
+  background-image: url('./icons/cancel.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 28px;
+  font-size: 0;
+  border-color: white;
+ 
+}
+
 .search-books-results {
   padding: 80px 10px 20px;
 }

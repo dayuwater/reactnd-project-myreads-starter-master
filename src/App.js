@@ -17,7 +17,18 @@ class BooksApp extends React.Component {
     showSearchPage: false,
     currentlyReading: [],
     wantToRead: [],
-    Read: []
+    Read: [],
+    books: []
+  }
+
+  // It seems that the backend database does not have any books at the beginning
+  // we must deal with search feature first in order to figure out the correct datastructure
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({books})
+    })
+    console.log(this.state)
+
   }
 
 
