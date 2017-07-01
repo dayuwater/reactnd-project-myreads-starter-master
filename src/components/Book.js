@@ -5,7 +5,8 @@ import * as BooksAPI from '../BooksAPI';
 
 class Book extends Component {
     static PropTypes={
-        data: PropTypes.object.isRequired
+        data: PropTypes.object.isRequired,
+        comeFrom: PropTypes.string.isRequired
 
     }
 
@@ -63,7 +64,7 @@ class Book extends Component {
     onShelfChanged(value){
         console.log(value + "selected")
         // update the backend
-        BooksAPI.update(this.props.data,"shelf1").then((res)=>(console.log(res)))
+        BooksAPI.update(this.props.data,value).then((res)=>(console.log(res)))
 
         
     }
@@ -81,7 +82,10 @@ class Book extends Component {
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>
-                            <option value="none">None</option>
+                            {(this.props.comeFrom == "local") ? 
+                                <option value="none">Delete</option> : 
+                                <option value="none">None</option>}
+                            
                         </select>
                     </div>
                 </div>

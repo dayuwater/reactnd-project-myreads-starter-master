@@ -56,7 +56,7 @@ class SearchPage extends Component {
                     {
                         this.state.books.map((book) => (
                         <li key={book.id}>
-                            <Book data={book} />
+                            <Book data={book} comeFrom="server"/>
                         </li>
                     ))}
                     
