@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class BookShelf extends Component {
+    static PropTypes = {
+        name: PropTypes.string.isRequired
+    }
     render() {
         return (
             <div className="bookshelf">
