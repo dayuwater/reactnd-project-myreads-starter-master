@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import * as BooksAPI from '../BooksAPI';
 
 class Book extends Component {
     static PropTypes={
@@ -10,6 +11,7 @@ class Book extends Component {
 
     // this acts like a bridge from book object to actual rendering the book
     state={
+        id: '',
         imgUrl: '',
         title: '',
         author: ''
@@ -19,6 +21,7 @@ class Book extends Component {
     // This acts like a View Model in MVVM design pattern
     componentDidMount() {
         console.log(this.props.data)
+        this.setState({id:this.props.data.id})
         // get the author
         // if there is only 1 author, get it directly
         // if there are more than 1 author, get the first one and append "et. al."
@@ -57,6 +60,14 @@ class Book extends Component {
 
     }
 
+    onShelfChanged(value){
+        console.log(value + "selected")
+        // update the backend
+        BooksAPI.update(this.props.data,"shelf1").then((res)=>(console.log(res)))
+
+        
+    }
+
 
     
     render() {
@@ -65,7 +76,7 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.state.imgUrl}")` }}></div>
                     <div className="book-shelf-changer">
-                        <select>
+                        <select onChange={(event) => this.onShelfChanged(event.target.value)}>
                             <option value="none" disabled>Move to...</option>
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
