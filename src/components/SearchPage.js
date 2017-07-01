@@ -34,7 +34,9 @@ class SearchPage extends Component {
        
     }
 
-
+    // because the returned book object is way more complicated than a simple data binding
+    // we must pass the entire book object into subview and let the subview 
+    // decide what to render
     render() {
         return (
         <div className= "search-books" >
@@ -54,7 +56,7 @@ class SearchPage extends Component {
                     {
                         this.state.books.map((book) => (
                         <li key={book.id}>
-                            <Book title={book.title} author="" imgUrl={book.imageLinks['thumbnail']} />
+                            <Book data={book} />
                         </li>
                     ))}
                     
