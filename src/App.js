@@ -4,6 +4,7 @@ import './App.css'
 import { Route, Link } from 'react-router-dom'
 import SearchPage from './components/SearchPage'
 import BookShelf from './components/BookShelf'
+import BookPage from './components/BookPage'
 
 
 class BooksApp extends React.Component {
@@ -79,6 +80,9 @@ class BooksApp extends React.Component {
           <SearchPage onShelfChanged={this.onShelfChanged}/>
         )}>
         </Route>
+
+        <Route path="/book/:id" component={BookPage}/>
+        
       </div>
     )
   }
