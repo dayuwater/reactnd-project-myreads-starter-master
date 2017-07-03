@@ -23,8 +23,8 @@ class BooksApp extends React.Component {
 
   // It seems that the backend database does not have any books at the beginning
   // we must deal with search feature first in order to figure out the correct datastructure
-  componentDidMount() {
-    // fetch the books from API
+
+  fetchBooksFromBackend(){
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     }).then(() => {
@@ -35,33 +35,35 @@ class BooksApp extends React.Component {
         Read: this.state.books.filter((book) => book.shelf == "read")
 
       })
-      console.log(this.state)
-      
-
     })
 
-    
-
-
-
   }
-
+  componentDidMount() {
+    this.fetchBooksFromBackend()
+  }
+  
+  onShelfChanged = (data, value) => {
+    // update the backend
+    BooksAPI.update(data,value).then((res)=>{
+      this.fetchBooksFromBackend()
+    })
+ 
+  }
 
   render() {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
           <div className="list-books">
-
               <div className="list-books-title">
                 <h1>MyReads</h1>
               </div>
 
               <div className="list-books-content">
                 <div>
-                  <BookShelf name="Currently Reading" books={this.state.currentlyReading}/>
-                  <BookShelf name="Want to Read" books={this.state.wantToRead}/>
-                  <BookShelf name="Read" books={this.state.Read}/>
+                  <BookShelf name="Currently Reading" books={this.state.currentlyReading} onShelfChanged={this.onShelfChanged}/>
+                  <BookShelf name="Want to Read" books={this.state.wantToRead} onShelfChanged={this.onShelfChanged}/>
+                  <BookShelf name="Read" books={this.state.Read} onShelfChanged={this.onShelfChanged}/>
                 </div>
               </div>
 
@@ -74,7 +76,7 @@ class BooksApp extends React.Component {
         </Route>
 
         <Route path="/search" render={() => (
-          <SearchPage />
+          <SearchPage onShelfChanged={this.onShelfChanged}/>
         )}>
         </Route>
       </div>

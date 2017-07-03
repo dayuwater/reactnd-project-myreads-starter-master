@@ -6,7 +6,8 @@ import * as BooksAPI from '../BooksAPI';
 class Book extends Component {
     static PropTypes={
         data: PropTypes.object.isRequired,
-        comeFrom: PropTypes.string.isRequired
+        comeFrom: PropTypes.string.isRequired,
+        onShelfChanged: PropTypes.func.isRequired
 
     }
 
@@ -69,13 +70,6 @@ class Book extends Component {
 
     }
 
-    onShelfChanged(value){
-        console.log(value + "selected")
-        // update the backend
-        BooksAPI.update(this.props.data,value).then((res)=>(console.log(res)))
-
-        
-    }
 
 
     
@@ -85,7 +79,7 @@ class Book extends Component {
                 <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.state.imgUrl}")` }}></div>
                     <div className="book-shelf-changer">
-                        <select onChange={(event) => this.onShelfChanged(event.target.value)}>
+                        <select onChange={(event) => this.props.onShelfChanged(this.props.data, event.target.value)}>
                             <option value="none" disabled>Move to...</option>
 
                              {(this.props.comeFrom == "local") ? 

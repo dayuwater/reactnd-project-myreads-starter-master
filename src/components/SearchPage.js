@@ -2,9 +2,15 @@ import React , {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Book from './Book';
 import * as BooksAPI from '../BooksAPI'
+import PropTypes from 'prop-types';
 
 
 class SearchPage extends Component {
+
+    static PropTypes = {
+        onShelfChanged: PropTypes.func.isRequired
+    }
+
     state ={
         query : '',
         books: []
@@ -56,7 +62,7 @@ class SearchPage extends Component {
                     {
                         this.state.books.map((book) => (
                         <li key={book.id}>
-                            <Book data={book} comeFrom="server"/>
+                            <Book data={book} comeFrom="server" onShelfChanged={this.props.onShelfChanged}/>
                         </li>
                     ))}
                     
