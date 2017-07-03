@@ -1,5 +1,6 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
+import './css/bootstrap.min.css';
 import './App.css'
 import { Route, Link } from 'react-router-dom'
 import SearchPage from './components/SearchPage'

@@ -185,3 +185,9 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* book detail */
+.book-attribute{
+  font-weight: bold;
+}
+
