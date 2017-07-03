@@ -5,29 +5,39 @@ import * as BooksAPI from '../BooksAPI'
 import PropTypes from 'prop-types';
 
 class BookPage extends Component {
-    static PropTypes = {
-        
-    }
 
     state = {
-        bookId: null
+        title : ""
     }
-    componentDidMount(){
-        // get the id of the book
-        this.setState({
-            bookId : this.props.match.params.id
+
+    componentDidMount() {
+        console.log(this.props.match.params.id)
+        // fetch the book from API
+        BooksAPI.get(this.props.match.params.id).then((book) => {
+            console.log(book)
+            // parse the json object and populate the detail page
+
+            // get the title
+            if (book.title == null) {
+                this.setState({ title: "Unknown Title" })
+            }
+            else {
+                this.setState({ title: book.title })
+            }
         })
 
-        // fetch the book from API
 
-        // parse the json object and populate the detal page
+
+
     }
+
+
     render() {
         return (
             <div class="book-detail" >
                 <div className="list-books-title">
                     <Link to="/" className="close-search">Close</Link>
-                    <h1>{this.state.bookId}</h1>
+                    <h1>{this.state.title}</h1>
                 </div>
             </div>
         )
