@@ -8,16 +8,16 @@ import BookShelf from './BookShelf'
 class DiscoverPage extends Component{
 
     state = {
-        displayMode : "categories",
+        displayMode : "pageCount",
         allBooks: [],
-        classfications: [],
+        classifications: [],
         categorizedBooks: [] // array of arrays
     }
 
     componentDidMount(){
         // step 1: search all the books in the backend
         var allBooks = []
-        BooksAPI.search('redux',30).then((books)=>{
+        BooksAPI.search('a',30).then((books)=>{
             allBooks = allBooks.concat(books)
         }).then(() => {
             this.setState({allBooks})
@@ -73,15 +73,16 @@ class DiscoverPage extends Component{
             ))
             categorizedBooks = categorizedBooks.concat([filtered])
 
+           
             
         }
         else if(mode == "pageCount"){
-            allValues = [200, 500, 800]
+            allValues = [200, 500, 800, Infinity]
             allValues.forEach((value) => {
                 console.log(value)
                 var filtered = this.state.allBooks.filter((book)=>(
                     // console.log(book[mode] == value)
-                    (book[mode] < value) && (chosenBooks.indexOf(book) == -1)
+                    (book[mode]) && (book[mode] < value) && (chosenBooks.indexOf(book) == -1)
                 ))
                 
                 categorizedBooks = categorizedBooks.concat([filtered])
@@ -94,6 +95,12 @@ class DiscoverPage extends Component{
 
             ))
             categorizedBooks = categorizedBooks.concat([filtered])
+
+            allValues=["less than 200 pages" , "200 - 500 pages",
+            "500 - 800 pages", "more than 800 pages"]
+
+           
+            
 
             
 
@@ -126,11 +133,14 @@ class DiscoverPage extends Component{
 
 
 
-            console.log(allValues)
+            
         }
 
+        allValues = Array.from(allValues)
+        allValues = allValues.concat("Unknown")
+
         // filter allBooks into different categories, put them into categorized [[]]
-        this.setState({classfications:allValues,
+        this.setState({classifications:allValues,
                         categorizedBooks:categorizedBooks
                     })
                     
@@ -165,15 +175,16 @@ class DiscoverPage extends Component{
 
               </header>
 
-              <h1> {this.state.displayMode} </h1>
-
-              {/*<div className="list-books-content">
+              <div className="list-books-content">
                 <div>
-                  <BookShelf name="Currently Reading" books={this.state.currentlyReading} onShelfChanged={this.onShelfChanged}/>
-                  <BookShelf name="Want to Read" books={this.state.wantToRead} onShelfChanged={this.onShelfChanged}/>
-                  <BookShelf name="Read" books={this.state.Read} onShelfChanged={this.onShelfChanged}/>
+                    {this.state.categorizedBooks.map((shelf, index) => (
+                        
+                        <BookShelf name={this.state.classifications[index]} books={shelf} onShelfChanged={this.props.onShelfChanged}/>
+                    ))}
+                  
+                  
                 </div>
-              </div>*/}
+              </div>
 
             </div>
         )
