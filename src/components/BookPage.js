@@ -68,7 +68,7 @@ class BookPage extends Component {
             if(book.industryIdentifiers == null){
                 this.setState({
                     ISBN_10: "Unknown",
-                    ISBN_13: "unknown"
+                    ISBN_13: "Unknown"
                 })
             }
             else{
@@ -106,8 +106,16 @@ class BookPage extends Component {
                     <Link to="/" className="close-search">Close</Link>
                     <h1>{this.state.title}</h1>
                     {console.log(this.state.book)}
-                    <h4>By {this.state.authors}, published {this.state.book.publishedDate} </h4>
-                    <h4> Rating: {this.state.book.averageRating} from {this.state.book.ratingsCount} votes </h4>
+                    {(this.state.book.publishedDate) ? (
+                        <h4>By {this.state.authors}, published {this.state.book.publishedDate} </h4>
+                    ) : (
+                        <h4>By {this.state.authors}</h4>
+                    )}
+                    
+                    {(this.state.book.averageRating) && (
+                        <h4> Rating: {this.state.book.averageRating} from {this.state.book.ratingsCount} votes </h4>
+                    )}
+                    
                 </div>
 
                 <div className="bookshelf">
