@@ -8,7 +8,7 @@ import BookShelf from './BookShelf'
 class DiscoverPage extends Component{
 
     state = {
-        displayMode : "category",
+        displayMode : "categories",
         allBooks: [],
         classfications: [],
         categorizedBooks: [] // array of arrays
@@ -17,7 +17,7 @@ class DiscoverPage extends Component{
     componentDidMount(){
         // step 1: search all the books in the backend
         var allBooks = []
-        BooksAPI.search('r',30).then((books)=>{
+        BooksAPI.search('redux',30).then((books)=>{
             allBooks = allBooks.concat(books)
         }).then(() => {
             this.setState({allBooks})
@@ -38,43 +38,103 @@ class DiscoverPage extends Component{
         // get all the possible value of that category
         var allValues = new Set()
         var categorizedBooks = []
+        var chosenBooks = []
 
         // this is a special case because it is not a singleton in the backend
         if(mode == "categories"){
+            // get all the possible categories
+            this.state.allBooks.map((book) => {
+                if(book[mode] != null){
+                    book[mode].map((value) => {
+                        allValues = allValues.add(value)
+                    })
+                }
+                
+            })
+            //console.log(allValues)
+
+            // put all books in known categories
+            // in this case, multiple classficiation are allowed
+            allValues.forEach((value) => {
+                // console.log(value)
+                var filtered = this.state.allBooks.filter((book)=>(
+                    // console.log(book[mode] == value)
+                    (book[mode]) &&  (book[mode].indexOf(value) > -1)
+                ))
+                // console.log(filtered)
+                categorizedBooks = categorizedBooks.concat([filtered])
+                chosenBooks = chosenBooks.concat(filtered)
+            })
+            // put all books in missing categories
+            var filtered = this.state.allBooks.filter((book)=>(
+                // console.log(book[mode] == value)
+                chosenBooks.indexOf(book) == -1
+
+            ))
+            categorizedBooks = categorizedBooks.concat([filtered])
+
             
+        }
+        else if(mode == "pageCount"){
+            allValues = [200, 500, 800]
+            allValues.forEach((value) => {
+                console.log(value)
+                var filtered = this.state.allBooks.filter((book)=>(
+                    // console.log(book[mode] == value)
+                    (book[mode] < value) && (chosenBooks.indexOf(book) == -1)
+                ))
+                
+                categorizedBooks = categorizedBooks.concat([filtered])
+                chosenBooks = chosenBooks.concat(filtered)
+            })
+            // add all fall off books
+            var filtered = this.state.allBooks.filter((book)=>(
+                // console.log(book[mode] == value)
+                chosenBooks.indexOf(book) == -1
+
+            ))
+            categorizedBooks = categorizedBooks.concat([filtered])
+
+            
+
         }
         // for all singleton entries
         else{
             this.state.allBooks.map((book) => {
                 allValues = allValues.add(book[mode])
             })
-            // for page count
-            if(mode == "pageCount"){
+          
+            allValues.forEach((value) => {
+                // console.log(value)
+                var filtered = this.state.allBooks.filter((book)=>(
+                    // console.log(book[mode] == value)
+                    book[mode] === value
+                ))
+                // console.log(filtered)
+                categorizedBooks = categorizedBooks.concat([filtered])
+                chosenBooks = chosenBooks.concat(filtered)
+            })
 
-            }
-            // for other modes
-            else{
-                this.setState({classfications:allValues})
-                allValues.forEach((value) => {
-                    console.log(value)
-                    var filtered = this.state.allBooks.filter((book)=>(
-                        // console.log(book[mode] == value)
-                       book[mode] === value
-                   ))
-                   console.log(filtered)
-                   categorizedBooks = categorizedBooks.concat([filtered])
-                })
-               this.setState({categorizedBooks})
-            }
+            // add all fall off books
+            var filtered = this.state.allBooks.filter((book)=>(
+                // console.log(book[mode] == value)
+                chosenBooks.indexOf(book) == -1
+
+            ))
+            categorizedBooks = categorizedBooks.concat([filtered])
 
 
-            
+
 
             console.log(allValues)
         }
 
         // filter allBooks into different categories, put them into categorized [[]]
-
+        this.setState({classfications:allValues,
+                        categorizedBooks:categorizedBooks
+                    })
+                    
+        
 
 
     }
@@ -83,8 +143,9 @@ class DiscoverPage extends Component{
 
     onDisplayModeChange = (mode) =>{
         // recategorize the books
-        this.categorizeBooks(mode)
+        
         this.setState({displayMode:mode})
+        this.categorizeBooks(mode)
         console.log(this.state)
         
     }
@@ -97,7 +158,7 @@ class DiscoverPage extends Component{
               </div>
 
               <header className="row">
-                  <button onClick={() => this.onDisplayModeChange("category")} className="col-sm-3 col-xs-6 btn btn-primary" type="button" > Category </button>
+                  <button onClick={() => this.onDisplayModeChange("categories")} className="col-sm-3 col-xs-6 btn btn-primary" type="button" > Category </button>
                   <button onClick={() => this.onDisplayModeChange("language")} className="col-sm-3 col-xs-6 btn btn-success" type="button" > Language </button>
                   <button onClick={() => this.onDisplayModeChange("maturityRating")} className="col-sm-3 col-xs-6 btn btn-info" type="button" > Maturity Rating </button>
                   <button onClick={() => this.onDisplayModeChange("pageCount")} className="col-sm-3 col-xs-6 btn btn-warning" type="button" > Page Count </button>
