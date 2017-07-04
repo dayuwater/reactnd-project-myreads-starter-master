@@ -24,10 +24,10 @@ class BookPage extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.match.params.id)
+        console.log(this.props)
         // fetch the book from API
         BooksAPI.get(this.props.match.params.id).then((book) => {
-            console.log(book)
+            // console.log(book)
             // parse the json object and populate the detail page
             this.setState({book})
             // get the title
@@ -106,11 +106,11 @@ class BookPage extends Component {
     render() {
 
         return (
-            <div class="book-detail" >
+            <div className="book-detail" >
                 <div className="list-books-title">
-                    <Link to="/" className="close-search">Close</Link>
+                    <button onClick={() => this.props.history.goBack()} className="close-search">Close</button>
                     <h1>{this.state.title}</h1>
-                    {console.log(this.state.book)}
+                    {/*{console.log(this.state.book)}*/}
                     {(this.state.book.publishedDate) ? (
                         <h4>By {this.state.authors}, published {this.state.book.publishedDate} </h4>
                     ) : (
@@ -128,6 +128,7 @@ class BookPage extends Component {
                         <a href={this.state.book.infoLink} className="col-md-6 btn btn-success"> Buy </a>
                         <a href={this.state.book.previewLink} className="col-md-6 btn btn-primary"> Preview </a>
                     </div>
+                    
                     <h2 className="bookshelf-title"> Description </h2>
                     <p> {this.state.book.description} </p>
                     <h2 className="bookshelf-title"> Images </h2>
@@ -180,10 +181,7 @@ class BookPage extends Component {
                     </div>
                 </div>
 
-                <div className="open-search">
-                    <Link to="/" >Add A book</Link>
-                </div>
-
+                
             </div>
 
         )
