@@ -6,6 +6,7 @@ import { Route, Link } from 'react-router-dom'
 import SearchPage from './components/SearchPage'
 import BookShelf from './components/BookShelf'
 import BookPage from './components/BookPage'
+import DiscoverPage from './components/DiscoverPage'
 
 
 class BooksApp extends React.Component {
@@ -69,9 +70,15 @@ class BooksApp extends React.Component {
                 </div>
               </div>
 
+              <div className="open-discover">
+                <Link to="/discover" >Discover A book</Link>
+              </div>
+
               <div className="open-search">
                 <Link to="/search" >Add A book</Link>
               </div>
+
+
 
             </div>
         )}>
@@ -83,6 +90,12 @@ class BooksApp extends React.Component {
         </Route>
 
         <Route path="/book/:id" component={BookPage}/>
+
+        <Route path="/discover" render={() => (
+          <DiscoverPage onShelfChanged={this.onShelfChanged}/>
+
+        )} />
+
         
       </div>
     )
