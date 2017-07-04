@@ -125,13 +125,13 @@ class BookPage extends Component {
 
                 <div className="bookshelf">
                     <div className="row">
-                        <a href={this.state.book.infoLink} className="col-md-6"> Google Play Button </a>
-                        <a href={this.state.book.previewLink} className="col-md-6 btn btn-primary"> Preview On Google Book </a>
+                        <a href={this.state.book.infoLink} className="col-md-6 btn btn-success"> Buy </a>
+                        <a href={this.state.book.previewLink} className="col-md-6 btn btn-primary"> Preview </a>
                     </div>
                     <h2 className="bookshelf-title"> Description </h2>
                     <p> {this.state.book.description} </p>
                     <h2 className="bookshelf-title"> Images </h2>
-                    <img img src={this.state.imgUrl} alt={this.state.title}></img>
+                    <img src={this.state.imgUrl} alt={this.state.title}></img>
                     <h2 className="bookshelf-title"> Product Detail </h2>
 
                     <div className="row">
