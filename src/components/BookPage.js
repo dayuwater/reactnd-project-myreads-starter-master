@@ -15,7 +15,7 @@ class BookPage extends Component {
         // it seems that array values need some special care
         title : "",
         authors: "",
-        imgUrls: [],
+        imgUrl: "",
         categories: "",
         ISBN_10: "",
         ISBN_13: ""
@@ -88,6 +88,11 @@ class BookPage extends Component {
                 
             }
 
+            // get the image url
+            if(book.imageLinks != null){
+                this.setState({imgUrl:book.imageLinks.thumbnail})
+            }
+
         })
 
 
@@ -119,69 +124,59 @@ class BookPage extends Component {
                 </div>
 
                 <div className="bookshelf">
+                    <div className="row">
+                        <a href={this.state.book.infoLink} className="col-md-6"> Google Play Button </a>
+                        <a href={this.state.book.previewLink} className="col-md-6 btn btn-primary"> Preview On Google Book </a>
+                    </div>
                     <h2 className="bookshelf-title"> Description </h2>
                     <p> {this.state.book.description} </p>
                     <h2 className="bookshelf-title"> Images </h2>
-                    <h2 className="bookshelf-title"> Useful Links </h2>
-                    <div className="row">
-                        <p className="col-md-4 book-attribute"> Canonical Volumn on Android Market </p>
-                        
-                    </div>
-
-                    <div className="row">
-                        <p className="col-md-4 book-attribute"> Google Play </p>
-                        
-                    </div>
-
-                    <div className="row">
-                        <p className="col-md-4 book-attribute"> Preview On Google Books </p>
-                        
-                    </div>
+                    <img img src={this.state.imgUrl} alt={this.state.title}></img>
                     <h2 className="bookshelf-title"> Product Detail </h2>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> Categories </p>
-                        <p className="col-md-8"> {this.state.categories} </p>
+                        <p className="col-xs-4 book-attribute"> Categories </p>
+                        <p className="col-xs-8"> {this.state.categories} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> Content Version </p>
-                        <p className="col-md-8"> {this.state.book.contentVersion} </p>
+                        <p className="col-xs-4 book-attribute"> Content Version </p>
+                        <p className="col-xs-8"> {this.state.book.contentVersion} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> ISBN_13 </p>
-                        <p className="col-md-8"> {this.state.ISBN_13} </p>
+                        <p className="col-xs-4 book-attribute"> ISBN_13 </p>
+                        <p className="col-xs-8"> {this.state.ISBN_13} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> ISBN_10 </p>
-                        <p className="col-md-8"> {this.state.ISBN_10} </p>
+                        <p className="col-xs-4 book-attribute"> ISBN_10 </p>
+                        <p className="col-xs-8"> {this.state.ISBN_10} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> Language </p>
-                        <p className="col-md-8"> {this.state.book.language} </p>
+                        <p className="col-xs-4 book-attribute"> Language </p>
+                        <p className="col-xs-8"> {this.state.book.language} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> Maturity Rating </p>
-                        <p className="col-md-8"> {this.state.book.maturityRating} </p>
+                        <p className="col-xs-4 book-attribute"> Maturity Rating </p>
+                        <p className="col-xs-8"> {this.state.book.maturityRating} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> Page Count </p>
-                        <p className="col-md-8"> {this.state.book.pageCount} </p>
+                        <p className="col-xs-4 book-attribute"> Page Count </p>
+                        <p className="col-xs-8"> {this.state.book.pageCount} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> Print Type </p>
-                        <p className="col-md-8"> {this.state.book.printType} </p>
+                        <p className="col-xs-4 book-attribute"> Print Type </p>
+                        <p className="col-xs-8"> {this.state.book.printType} </p>
                     </div>
 
                     <div className="row">
-                        <p className="col-md-4 book-attribute"> Publisher </p>
-                        <p className="col-md-8"> {this.state.book.publisher} </p>
+                        <p className="col-xs-4 book-attribute"> Publisher </p>
+                        <p className="col-xs-8"> {this.state.book.publisher} </p>
                     </div>
                 </div>
 
