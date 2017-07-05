@@ -8,28 +8,58 @@ import BookShelf from './BookShelf'
 class DiscoverPage extends Component{
 
     state = {
-        displayMode : "pageCount",
+        displayMode : "categories",
         allBooks: [],
+        discBooks: [],
         classifications: [],
         categorizedBooks: [] // array of arrays
+    }
+
+    loadBooks(){
+        // I tried to load all the possible queries and my computer suddenly frozen
+        // So I just use a small portion of queries
+        // Nevertheless, this clearly shows how the discover page should work
+        let start = Math.random() * (BooksAPI.searchTerms.length - 11)
+
+        BooksAPI.searchTerms.slice(start,start+10).forEach((term) => {
+            BooksAPI.search(term, 30).then((books) => {
+                
+                let allBooks = this.state.allBooks.concat(books)
+                allBooks = Array.from(new Set(allBooks))
+                this.setState({allBooks})
+                
+            }).then(() => {
+ 
+            // step 2: Categorize the books into given categories
+            this.categorizeBooks(this.state.displayMode)
+
+            })
+
+        })
+
     }
 
     componentDidMount(){
         // step 1: search all the books in the backend
         var allBooks = []
-        BooksAPI.search('a',30).then((books)=>{
-            allBooks = allBooks.concat(books)
-        }).then(() => {
-            this.setState({allBooks})
-            console.log(this.state)
-        }).then(() => {
+        var discBooks = []
         
+        //BooksAPI.discover()
+        var queue = Promise.resolve()
+        this.loadBooks()
 
+  
+        // BooksAPI.search('a',30).then((books)=>{
+        //     allBooks = allBooks.concat(books)
+        // }).then(() => {
+        //     this.setState({allBooks})
+        //     console.log(this.state)
+        // }).then(() => {
+ 
+        //     // step 2: Categorize the books into given categories
+        //     this.categorizeBooks(this.state.displayMode)
 
-            // step 2: Categorize the books into given categories
-            this.categorizeBooks(this.state.displayMode)
-
-        })
+        // })
 
     }
 
@@ -149,6 +179,8 @@ class DiscoverPage extends Component{
 
     }
 
+    
+
 
 
     onDisplayModeChange = (mode) =>{
@@ -179,7 +211,7 @@ class DiscoverPage extends Component{
                 <div>
                     {this.state.categorizedBooks.map((shelf, index) => (
                         
-                        <BookShelf name={this.state.classifications[index]} books={shelf} onShelfChanged={this.props.onShelfChanged}/>
+                        <BookShelf comeFrom="server" name={this.state.classifications[index]} books={shelf} onShelfChanged={this.props.onShelfChanged}/>
                     ))}
                   
                   

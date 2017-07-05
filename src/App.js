@@ -27,7 +27,7 @@ class BooksApp extends React.Component {
   // It seems that the backend database does not have any books at the beginning
   // we must deal with search feature first in order to figure out the correct datastructure
 
-  fetchBooksFromBackend(){
+  fetchBooksFromBackend() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     }).then(() => {
@@ -44,13 +44,13 @@ class BooksApp extends React.Component {
   componentDidMount() {
     this.fetchBooksFromBackend()
   }
-  
+
   onShelfChanged = (data, value) => {
     // update the backend
-    BooksAPI.update(data,value).then((res)=>{
+    BooksAPI.update(data, value).then((res) => {
       this.fetchBooksFromBackend()
     })
- 
+
   }
 
   render() {
@@ -58,45 +58,45 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route exact path="/" render={() => (
           <div className="list-books">
-              <div className="list-books-title">
-                <h1>MyReads</h1>
-              </div>
-
-              <div className="list-books-content">
-                <div>
-                  <BookShelf name="Currently Reading" books={this.state.currentlyReading} onShelfChanged={this.onShelfChanged}/>
-                  <BookShelf name="Want to Read" books={this.state.wantToRead} onShelfChanged={this.onShelfChanged}/>
-                  <BookShelf name="Read" books={this.state.Read} onShelfChanged={this.onShelfChanged}/>
-                </div>
-              </div>
-
-              <div className="open-discover">
-                <Link to="/discover" >Discover A book</Link>
-              </div>
-
-              <div className="open-search">
-                <Link to="/search" >Add A book</Link>
-              </div>
-
-
-
+            <div className="list-books-title">
+              <h1>MyReads</h1>
             </div>
+
+            <div className="list-books-content">
+              <div>
+                <BookShelf name="Currently Reading" comeFrom="local" books={this.state.currentlyReading} onShelfChanged={this.onShelfChanged} />
+                <BookShelf name="Want to Read" comeFrom="local" books={this.state.wantToRead} onShelfChanged={this.onShelfChanged} />
+                <BookShelf name="Read" comeFrom="local" books={this.state.Read} onShelfChanged={this.onShelfChanged} />
+              </div>
+            </div>
+
+            <div className="open-discover">
+              <Link to="/discover" >Discover A book</Link>
+            </div>
+
+            <div className="open-search">
+              <Link to="/search" >Add A book</Link>
+            </div>
+
+
+
+          </div>
         )}>
         </Route>
 
         <Route path="/search" render={() => (
-          <SearchPage onShelfChanged={this.onShelfChanged}/>
+          <SearchPage onShelfChanged={this.onShelfChanged} />
         )}>
         </Route>
 
-        <Route path="/book/:id" component={BookPage}/>
+        <Route path="/book/:id" component={BookPage} />
 
         <Route path="/discover" render={() => (
-          <DiscoverPage onShelfChanged={this.onShelfChanged}/>
+          <DiscoverPage onShelfChanged={this.onShelfChanged} />
 
         )} />
 
-        
+
       </div>
     )
   }

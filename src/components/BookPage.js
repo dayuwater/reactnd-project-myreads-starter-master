@@ -125,8 +125,8 @@ class BookPage extends Component {
 
                 <div className="bookshelf">
                     <div className="row">
-                        <a href={this.state.book.infoLink} className="col-md-6 btn btn-success"> Buy </a>
-                        <a href={this.state.book.previewLink} className="col-md-6 btn btn-primary"> Preview </a>
+                        <a href={this.state.book.infoLink} className="col-xs-6 btn btn-success"> Buy </a>
+                        <a href={this.state.book.previewLink} className="col-xs-6 btn btn-primary"> Preview </a>
                     </div>
                     
                     <h2 className="bookshelf-title"> Description </h2>

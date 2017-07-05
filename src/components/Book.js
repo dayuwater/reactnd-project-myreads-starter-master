@@ -51,12 +51,12 @@ class Book extends Component {
         // get the image url if it has link
         if(this.props.data.imageLinks != null){
             // try to get the small thumbnail first
-            if(this.props.data.imageLinks.smallThumbnail){
-                this.setState({imgUrl:this.props.data.imageLinks.smallThumbnail})
+            if(this.props.data.imageLinks.thumbnail){
+                this.setState({imgUrl:this.props.data.imageLinks.thumbnail})
             }
             // if failed, try to get the large thumbnail
-            else if(this.props.data.imageLinks.thumbnail){
-                this.setState({imgUrl:this.props.data.imageLinks.thumbnail})
+            else if(this.props.data.imageLinks.smallThumbnail){
+                this.setState({imgUrl:this.props.data.imageLinks.smallThumbnail})
 
             }
             // if still failed, leave it blank
