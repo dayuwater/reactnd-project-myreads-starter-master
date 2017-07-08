@@ -8,6 +8,7 @@ class BookShelf extends Component {
         name: PropTypes.string.isRequired,
         books: PropTypes.array.isRequired,
         onShelfChanged: PropTypes.func.isRequired,
+        getShelf: PropTypes.func.isRequired,
         comeFrom : PropTypes.string.isRequired
     }
     render() {
@@ -19,7 +20,9 @@ class BookShelf extends Component {
                         {console.log(this.props.name)}
                         {this.props.books.map((book) => (
                             <li key={book.id}>
-                                <Book data={book} comeFrom={this.props.comeFrom} onShelfChanged={this.props.onShelfChanged}/>
+                                <Book data={book} comeFrom={this.props.comeFrom} 
+                                onShelfChanged={this.props.onShelfChanged} 
+                                getShelf={this.props.getShelf}/>
                             </li>
                         ))}
                         

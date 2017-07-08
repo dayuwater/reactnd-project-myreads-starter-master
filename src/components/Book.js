@@ -7,7 +7,8 @@ class Book extends Component {
     static PropTypes={
         data: PropTypes.object.isRequired,
         comeFrom: PropTypes.string.isRequired,
-        onShelfChanged: PropTypes.func.isRequired
+        onShelfChanged: PropTypes.func.isRequired,
+        getShelf:PropTypes.func.isRequired
 
     }
 
@@ -62,10 +63,11 @@ class Book extends Component {
             // if still failed, leave it blank
         }
 
-        // get the shelf data
-        if(this.props.data.shelf != null){
-            this.setState({shelf:this.props.data.shelf})
-        }
+        // // get the shelf data from App.js
+        // if(this.props.data.shelf != null){
+        //     this.setState({shelf:this.props.data.shelf})
+        // }
+        this.setState({shelf:this.props.getShelf(this.props.data)})
        
 
     }
@@ -84,7 +86,7 @@ class Book extends Component {
                         <select onChange={(event) => this.props.onShelfChanged(this.props.data, event.target.value)}>
                             <option value="none" disabled>Move to...</option>
 
-                             {(this.props.comeFrom == "local") ? 
+                            {(this.props.comeFrom == "local") ? 
                                 <option value="none">Delete</option> : 
                                 <option value="none">None</option>}
                             {
@@ -103,6 +105,8 @@ class Book extends Component {
                 </div>
                 <Link to={`/book/${this.state.id}`} className="book-title">{this.state.title}</Link>
                 <div className="book-authors">{this.state.author}</div>
+                
+
             </div>
         )
     }

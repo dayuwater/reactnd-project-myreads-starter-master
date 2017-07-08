@@ -50,6 +50,28 @@ class BooksApp extends React.Component {
     BooksAPI.update(data, value).then((res) => {
       this.fetchBooksFromBackend()
     })
+   
+  }
+
+  // get the shelf of that book
+  getShelf = (book) => {
+    let isInCurrentReading = this.state.currentlyReading.filter( b => b.id == book.id )
+    let isInWantToRead = this.state.wantToRead.filter( b => b.id == book.id )
+    let isInRead = this.state.Read.filter( b => b.id == book.id )
+
+    if(isInCurrentReading.length > 0){
+      return "currentlyReading"
+    }
+    else if(isInWantToRead.length > 0){
+      return "wantToRead"
+    }
+    else if(isInRead.length > 0){
+      return "read"
+    }
+    else{
+      return "none"
+    }
+    
 
   }
 
@@ -64,9 +86,12 @@ class BooksApp extends React.Component {
 
             <div className="list-books-content">
               <div>
-                <BookShelf name="Currently Reading" comeFrom="local" books={this.state.currentlyReading} onShelfChanged={this.onShelfChanged} />
-                <BookShelf name="Want to Read" comeFrom="local" books={this.state.wantToRead} onShelfChanged={this.onShelfChanged} />
-                <BookShelf name="Read" comeFrom="local" books={this.state.Read} onShelfChanged={this.onShelfChanged} />
+                <BookShelf name="Currently Reading" comeFrom="local" books={this.state.currentlyReading} 
+                onShelfChanged={this.onShelfChanged} getShelf={this.getShelf} />
+                <BookShelf name="Want to Read" comeFrom="local" books={this.state.wantToRead} 
+                onShelfChanged={this.onShelfChanged} getShelf={this.getShelf}/>
+                <BookShelf name="Read" comeFrom="local" books={this.state.Read} 
+                onShelfChanged={this.onShelfChanged} getShelf={this.getShelf}/>
               </div>
             </div>
 
@@ -85,14 +110,14 @@ class BooksApp extends React.Component {
         </Route>
 
         <Route path="/search" render={() => (
-          <SearchPage onShelfChanged={this.onShelfChanged} />
+          <SearchPage onShelfChanged={this.onShelfChanged} getShelf={this.getShelf} />
         )}>
         </Route>
 
         <Route path="/book/:id" component={BookPage} />
 
         <Route path="/discover" render={() => (
-          <DiscoverPage onShelfChanged={this.onShelfChanged} />
+          <DiscoverPage onShelfChanged={this.onShelfChanged} getShelf={this.getShelf}/>
 
         )} />
 

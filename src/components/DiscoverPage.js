@@ -7,6 +7,10 @@ import BookShelf from './BookShelf'
 
 class DiscoverPage extends Component{
 
+    static PropTypes = {
+        getShelf: PropTypes.func.isRequired
+    }
+
     state = {
         displayMode : "categories",
         allBooks: [],
@@ -43,23 +47,7 @@ class DiscoverPage extends Component{
         // step 1: search all the books in the backend
         var allBooks = []
         var discBooks = []
-        
-        //BooksAPI.discover()
-        var queue = Promise.resolve()
         this.loadBooks()
-
-  
-        // BooksAPI.search('a',30).then((books)=>{
-        //     allBooks = allBooks.concat(books)
-        // }).then(() => {
-        //     this.setState({allBooks})
-        //     console.log(this.state)
-        // }).then(() => {
- 
-        //     // step 2: Categorize the books into given categories
-        //     this.categorizeBooks(this.state.displayMode)
-
-        // })
 
     }
 
@@ -211,7 +199,8 @@ class DiscoverPage extends Component{
                 <div>
                     {this.state.categorizedBooks.map((shelf, index) => (
                         
-                        <BookShelf comeFrom="server" name={this.state.classifications[index]} books={shelf} onShelfChanged={this.props.onShelfChanged}/>
+                        <BookShelf comeFrom="server" name={this.state.classifications[index]} books={shelf} 
+                        onShelfChanged={this.props.onShelfChanged} getShelf={this.props.getShelf}/>
                     ))}
                   
                   
