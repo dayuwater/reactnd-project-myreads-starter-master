@@ -88,43 +88,15 @@ class Book extends Component {
                                 <option value="none">Delete</option> : 
                                 <option value="none">None</option>}
                             {
-                                // This code does not work, even it looks in an elegant way
-                                this.state.selections.map((key, value) => {
+                                this.state.selections.map((key, value) => (
                                     (this.state.shelf == key) ? 
                                         <option value={key} selected > {this.state.selects[value]} </option>
                                       : 
                                         <option value={key}>{this.state.selects[value]}</option>
                                     
-                                })
+                                ))
                                 
-                            }
-
-                            {
-                                (this.state.shelf == this.state.selections[0]) ? 
-                                        <option value={this.state.selections[0]} selected > {this.state.selects[0]} </option>
-                                      : 
-                                        <option value={this.state.selections[0]} > {this.state.selects[0]} </option>
-                            }
-
-                            {
-                                (this.state.shelf == this.state.selections[1]) ? 
-                                        <option value={this.state.selections[1]} selected > {this.state.selects[1]} </option>
-                                      : 
-                                        <option value={this.state.selections[1]} > {this.state.selects[1]} </option>
-                            }
-
-                            {
-                                (this.state.shelf == this.state.selections[2]) ? 
-                                        <option value={this.state.selections[2]} selected > {this.state.selects[2]} </option>
-                                      : 
-                                        <option value={this.state.selections[2]}> {this.state.selects[2]} </option>
-                            }
-                            
-                            
-                            {/*<option value={this.state.selections[0]}>{this.state.selects[0]}</option>
-                            <option value="wantToRead">Want to Read</option>
-                            <option value="read">Read</option>*/}
-                           
+                            }                  
                             
                         </select>
                     </div>
