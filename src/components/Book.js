@@ -7,7 +7,8 @@ class Book extends Component {
     static PropTypes={
         data: PropTypes.object.isRequired,
         comeFrom: PropTypes.string.isRequired,
-        onShelfChanged: PropTypes.func.isRequired
+        onShelfChanged: PropTypes.func.isRequired,
+        getShelf:PropTypes.func.isRequired
 
     }
 
@@ -51,21 +52,22 @@ class Book extends Component {
         // get the image url if it has link
         if(this.props.data.imageLinks != null){
             // try to get the small thumbnail first
-            if(this.props.data.imageLinks.smallThumbnail){
-                this.setState({imgUrl:this.props.data.imageLinks.smallThumbnail})
+            if(this.props.data.imageLinks.thumbnail){
+                this.setState({imgUrl:this.props.data.imageLinks.thumbnail})
             }
             // if failed, try to get the large thumbnail
-            else if(this.props.data.imageLinks.thumbnail){
-                this.setState({imgUrl:this.props.data.imageLinks.thumbnail})
+            else if(this.props.data.imageLinks.smallThumbnail){
+                this.setState({imgUrl:this.props.data.imageLinks.smallThumbnail})
 
             }
             // if still failed, leave it blank
         }
 
-        // get the shelf data
-        if(this.props.data.shelf != null){
-            this.setState({shelf:this.props.data.shelf})
-        }
+        // // get the shelf data from App.js
+        // if(this.props.data.shelf != null){
+        //     this.setState({shelf:this.props.data.shelf})
+        // }
+        this.setState({shelf:this.props.getShelf(this.props.data)})
        
 
     }
@@ -84,53 +86,27 @@ class Book extends Component {
                         <select onChange={(event) => this.props.onShelfChanged(this.props.data, event.target.value)}>
                             <option value="none" disabled>Move to...</option>
 
-                             {(this.props.comeFrom == "local") ? 
+                            {(this.props.comeFrom == "local") ? 
                                 <option value="none">Delete</option> : 
                                 <option value="none">None</option>}
                             {
-                                // This code does not work, even it looks in an elegant way
-                                this.state.selections.map((key, value) => {
+                                this.state.selections.map((key, value) => (
                                     (this.state.shelf == key) ? 
                                         <option value={key} selected > {this.state.selects[value]} </option>
                                       : 
                                         <option value={key}>{this.state.selects[value]}</option>
                                     
-                                })
+                                ))
                                 
-                            }
-
-                            {
-                                (this.state.shelf == this.state.selections[0]) ? 
-                                        <option value={this.state.selections[0]} selected > {this.state.selects[0]} </option>
-                                      : 
-                                        <option value={this.state.selections[0]} > {this.state.selects[0]} </option>
-                            }
-
-                            {
-                                (this.state.shelf == this.state.selections[1]) ? 
-                                        <option value={this.state.selections[1]} selected > {this.state.selects[1]} </option>
-                                      : 
-                                        <option value={this.state.selections[1]} > {this.state.selects[1]} </option>
-                            }
-
-                            {
-                                (this.state.shelf == this.state.selections[2]) ? 
-                                        <option value={this.state.selections[2]} selected > {this.state.selects[2]} </option>
-                                      : 
-                                        <option value={this.state.selections[2]}> {this.state.selects[2]} </option>
-                            }
-                            
-                            
-                            {/*<option value={this.state.selections[0]}>{this.state.selects[0]}</option>
-                            <option value="wantToRead">Want to Read</option>
-                            <option value="read">Read</option>*/}
-                           
+                            }                  
                             
                         </select>
                     </div>
                 </div>
                 <Link to={`/book/${this.state.id}`} className="book-title">{this.state.title}</Link>
                 <div className="book-authors">{this.state.author}</div>
+                
+
             </div>
         )
     }

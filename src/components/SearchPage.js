@@ -8,7 +8,8 @@ import PropTypes from 'prop-types';
 class SearchPage extends Component {
 
     static PropTypes = {
-        onShelfChanged: PropTypes.func.isRequired
+        onShelfChanged: PropTypes.func.isRequired,
+        getShelf: PropTypes.func.isRequired
     }
 
     state ={
@@ -62,7 +63,8 @@ class SearchPage extends Component {
                     {
                         this.state.books.map((book) => (
                         <li key={book.id}>
-                            <Book data={book} comeFrom="server" onShelfChanged={this.props.onShelfChanged}/>
+                            <Book data={book} comeFrom="server" 
+                            onShelfChanged={this.props.onShelfChanged} getShelf={this.props.getShelf}/>
                         </li>
                     ))}
                     

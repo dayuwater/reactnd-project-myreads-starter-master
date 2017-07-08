@@ -7,7 +7,9 @@ class BookShelf extends Component {
     static PropTypes = {
         name: PropTypes.string.isRequired,
         books: PropTypes.array.isRequired,
-        onShelfChanged: PropTypes.func.isRequired
+        onShelfChanged: PropTypes.func.isRequired,
+        getShelf: PropTypes.func.isRequired,
+        comeFrom : PropTypes.string.isRequired
     }
     render() {
         return (
@@ -15,9 +17,12 @@ class BookShelf extends Component {
                 <h2 className="bookshelf-title">{this.props.name}</h2>
                 <div className="bookshelf-books">
                     <ol className="books-grid">
+                        {console.log(this.props.name)}
                         {this.props.books.map((book) => (
                             <li key={book.id}>
-                                <Book data={book} comeFrom="local" onShelfChanged={this.props.onShelfChanged}/>
+                                <Book data={book} comeFrom={this.props.comeFrom} 
+                                onShelfChanged={this.props.onShelfChanged} 
+                                getShelf={this.props.getShelf}/>
                             </li>
                         ))}
                         
